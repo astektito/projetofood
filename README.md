@@ -1,61 +1,43 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Proyectos-codigo-
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Coleccion de pequenos ejercicios y proyectos academicos de programacion realizados como estudiante de la ESPE (Ecuador). Incluye ejercicios de consola en C++ y un ejercicio de Programacion Orientada a Objetos en Java.
 
-## About Laravel
+## Tecnologias
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- C++ (proyectos de Code::Blocks `.cbp` y de Visual Studio `.sln`/`.vcxproj`)
+- Java (proyecto de NetBeans con Apache Ant, `build.xml`)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Estructura
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- `MatrizPrimaDinamica/` — C++ (Visual Studio): busca los numeros primos dentro de una matriz usando memoria dinamica.
+- `redondear/` — C++ (Code::Blocks): redondeo de un numero ingresado.
+- `rotar/` — C++ (Code::Blocks): rotacion de los elementos de un vector.
+- `seno_taylor/` — C++ (Code::Blocks): calculo del seno mediante la serie de Taylor.
+- `suma digitsal/` — C++ (Code::Blocks): suma de digitos y raiz digital de un numero (recursividad).
+- `PuntoPOO/` — Java (NetBeans): ejercicio de POO con una clase `Punto` y una clase `Operaciones` que calcula la distancia/recorrido entre puntos.
 
-## Learning Laravel
+## Como ejecutar
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+No hay un unico gestor de dependencias; cada carpeta es un proyecto independiente.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Para los ejercicios en C++ puedes compilar el `main.cpp` directamente, por ejemplo:
 
-## Laravel Sponsors
+```bash
+g++ redondear/main.cpp -o redondear && ./redondear
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Tambien puedes abrir los archivos `.cbp` en Code::Blocks o `MatrizPrimaDinamica.sln` en Visual Studio.
 
-### Premium Partners
+Para el ejercicio en Java (`PuntoPOO/`), abre el proyecto en NetBeans, o compila y ejecuta manualmente:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[OP.GG](https://op.gg)**
+```bash
+cd PuntoPOO
+javac -d build/classes src/puntopoo/*.java
+java -cp build/classes puntopoo.PuntoPOO
+```
 
-## Contributing
+## Nota
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Son ejercicios con fines de aprendizaje universitario; el codigo se conserva tal como se elaboro en clase.
 
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Autor: Edwin Astudillo
