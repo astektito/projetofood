@@ -14,7 +14,7 @@ class ProductsSeeder extends Seeder
     private $productsPath = 'public/products';
 
     private $contadorGlobal = 0;
-    private $totaProducts = 60;
+    private $totalProducts = 70; // number of addProduct() calls in run()
     private $faker = null;
 
     /* Run the database seeds.
@@ -100,9 +100,9 @@ class ProductsSeeder extends Seeder
         $this->addProduct($this->faker, 'salada_thai.jpg', 'Salada Thai', 'cold dish', 8.9);
         $this->addProduct($this->faker, 'salmao_sashimi.jpg', 'Salmão Sashimi', 'cold dish', 11.9);
         $this->addProduct($this->faker, 'salada_camarao.jpg', 'Salada de Camarão', 'cold dish', 10.2);
-        $this->addProduct($this->faker, 'salada_brocolos_amendoa.jpg', 'Salda de Bróculos com Amêndoa', 'cold dish', 9.9);
+        $this->addProduct($this->faker, 'salada_brocolos_amendoa.jpg', 'Salada de Bróculos com Amêndoa', 'cold dish', 9.9);
         $this->addProduct($this->faker, 'salada_fria_frango.jpg', 'Salada Fria de Frango', 'cold dish', 4.0);
-        $this->addProduct($this->faker, 'salada_noodles.jpg', 'Salada decNoodles', 'cold dish', 3.8);
+        $this->addProduct($this->faker, 'salada_noodles.jpg', 'Salada de Noodles', 'cold dish', 3.8);
     }
 
     private function copyProfilePhoto($filename)
@@ -132,6 +132,6 @@ class ProductsSeeder extends Seeder
         ];
         $this->contadorGlobal++;
         DB::table('products')->insert($product);
-        $this->command->info("Created Product {$this->contadorGlobal}/{$this->totaProducts}: " . $product['name']);
+        $this->command->info("Created Product {$this->contadorGlobal}/{$this->totalProducts}: " . $product['name']);
     }
 }

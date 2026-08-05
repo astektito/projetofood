@@ -13,9 +13,11 @@ class OrdersSeeder extends Seeder
     private $avgOrdersDay = [60, 10, 15, 15, 20, 30, 50]; // Domingo, Segunda, terça, ...
     private $quantidades = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 4, 4, 5, 6];
 
-    private $velocidadeCooks = [1, 1.2, 2, 1.7, 1.8, 1.5]; // são 6 cooks (4 a 9)
-    private $velocidadeDelivery = [1, 1.4, 2.8, 2.3, 1.8, 1.3, 1.9, 2.1, 2.4, 1.2, 2.3, 1.9]; // são 12 deliveryman (10 a 21)
+    private $velocidadeCooks = [1, 1.2, 2, 1.7, 1.8, 1.5]; // são 6 cooks (type = 'EC')
+    private $velocidadeDelivery = [1, 1.4, 2.8, 2.3, 1.8, 1.3, 1.9, 2.1, 2.4, 1.2, 2.3, 1.9]; // são 12 deliveryman (type = 'ED')
     private $customerIDs = [];
+    private $cookIDs = [];
+    private $deliverymanIDs = [];
     private $productIDs = [];
     private $productPrices = [];
 
@@ -41,6 +43,11 @@ class OrdersSeeder extends Seeder
 
         $this->command->info("Preparing Customers");
         $this->customerIDs = Arr::pluck(DB::select('select id from customers'), 'id');
+
+        $this->command->info("Preparing Employees (Cooks and Deliverymen)");
+        // Employee types defined in UsersSeeder: 'EC' = Cook, 'ED' = Deliveryman
+        $this->cookIDs = DB::table('users')->where('type', 'EC')->pluck('id')->toArray();
+        $this->deliverymanIDs = DB::table('users')->where('type', 'ED')->pluck('id')->toArray();
 
         $faker = \Faker\Factory::create('pt_PT');
 
@@ -72,9 +79,8 @@ class OrdersSeeder extends Seeder
 
             foreach ($ids as $id) {
                 $allItems = [];
-                $total = $this->createOrderItemsArray($allItems, $id);
+                $this->createOrderItemsArray($allItems, $id);
                 DB::table('order_items')->insert($allItems);
-                //DB::update('update orders set total_price = ? where id = ?', [$total, $id]);
             }
             $i++;
             $d->addDays(1);
@@ -88,10 +94,16 @@ class OrdersSeeder extends Seeder
 
     private function createOrderArray($faker, $day)
     {
-        $cook_id = rand(4, 9);
-        $deliveryman_id = rand(10, 21);
-        $timeCook = 5 * 60 * (10 / rand(2, 10) * $this->velocidadeCooks[$cook_id - 4]);
-        $timeDeliver = 5 * 60 * (10 / rand(2, 10) * $this->velocidadeDelivery[$deliveryman_id - 10]);
+        // Pick a random cook / deliveryman by position so the "speed" arrays are
+        // mapped by index within the set of real IDs (not by a fixed subtraction).
+        $cookIdx = array_rand($this->cookIDs);
+        $deliverymanIdx = array_rand($this->deliverymanIDs);
+        $cook_id = $this->cookIDs[$cookIdx];
+        $deliveryman_id = $this->deliverymanIDs[$deliverymanIdx];
+        $cookSpeed = $this->velocidadeCooks[$cookIdx % count($this->velocidadeCooks)];
+        $deliverySpeed = $this->velocidadeDelivery[$deliverymanIdx % count($this->velocidadeDelivery)];
+        $timeCook = 5 * 60 * (10 / rand(2, 10) * $cookSpeed);
+        $timeDeliver = 5 * 60 * (10 / rand(2, 10) * $deliverySpeed);
         $timeTotal = $timeCook + $timeDeliver + rand(0, 600);
         $inicio = $day->copy()->addSeconds(rand(39600, 78000));
         $fim = $inicio->copy()->addSeconds($timeTotal);
@@ -119,7 +131,6 @@ class OrdersSeeder extends Seeder
     private function createOrderItemsArray(&$allItems, $id_order)
     {
         $totalItems = rand(1, 10);
-        $total = 0;
         for ($i = 0; $i < $totalItems; $i++) {
             $prodID = Arr::random($this->productIDs);
             $qty = Arr::random($this->quantidades);
@@ -132,6 +143,5 @@ class OrdersSeeder extends Seeder
                 'sub_total_price' => $subTotal
             ];
         }
-        return $total;
     }
 }
