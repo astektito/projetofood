@@ -107,7 +107,7 @@ class Initial extends Migration
         Schema::dropIfExists('products');
         Schema::dropIfExists('customers');
         Schema::table('users', function ($table) {
-            $table->dropColumn(['type', 'blocked', 'photo_url', 'logged_at', 'deleted_at']);
+            $table->dropColumn(['type', 'blocked', 'photo_url', 'logged_at', 'available_at', 'deleted_at']);
         });
     }
 }
